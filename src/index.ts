@@ -26,7 +26,7 @@ const toThreadName = (message: Message) => {
     .trim();
   const words = cleaned.split(" ").filter(Boolean).slice(0, 6);
   const base = words.length > 0 ? words.join(" ") : "request";
-  return `bot-${base}`.slice(0, 100);
+  return `amaan's-coding-agent-${base}`.slice(0, 100);
 };
 
 const isBotOwnedThread = (message: Message) => {
