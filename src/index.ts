@@ -40,7 +40,7 @@ const buildThreadContext = async (message: Message) => {
 
   const fetched = await channel.messages.fetch({ limit: 20 });
   const ordered = [...fetched.values()].sort(
-    (a, b) => a.createdTimestamp - b.createdTimestamp
+    (a, b) => a.createdTimestamp - b.createdTimestamp,
   );
 
   const messages: GroqMessage[] = ordered.map((msg) => {
@@ -68,7 +68,7 @@ const handleThreadMessage = async (message: Message) => {
     content === "status";
 
   console.log(
-    `Thread message from ${message.author.tag} (${message.id}): ${message.content}`
+    `Thread message from ${message.author.tag} (${message.id}): ${message.content}`,
   );
 
   if (wantsHealth) {
@@ -83,7 +83,7 @@ const handleThreadMessage = async (message: Message) => {
     } catch (error) {
       console.error("Groq health error", error);
       await message.reply(
-        "Groq: error reaching the API. Check GROQ_API_KEY and connectivity."
+        "Groq: error reaching the API. Check GROQ_API_KEY and connectivity.",
       );
     }
     return;
@@ -91,7 +91,7 @@ const handleThreadMessage = async (message: Message) => {
 
   if (wantsImplement) {
     await message.reply(
-      "Execution is not wired yet. I can draft a plan now; say `plan`."
+      "Execution is not wired yet. I can draft a plan now; say `plan`.",
     );
     return;
   }
@@ -111,7 +111,7 @@ const handleThreadMessage = async (message: Message) => {
   } catch (error) {
     console.error("Groq error", error);
     await message.reply(
-      "I hit an issue reaching the planning model. Please try again in a moment or say `health`."
+      "I hit an issue reaching the planning model. Please try again in a moment or say `health`.",
     );
   }
 };
@@ -130,15 +130,16 @@ client.on("messageCreate", async (message) => {
 
   if (message.channel.type !== ChannelType.GuildText) return;
 
-  const thread = message.hasThread && message.thread
-    ? message.thread
-    : await message.startThread({
-        name: toThreadName(message),
-        autoArchiveDuration: THREAD_ARCHIVE_MINUTES,
-      });
+  const thread =
+    message.hasThread && message.thread
+      ? message.thread
+      : await message.startThread({
+          name: toThreadName(message),
+          autoArchiveDuration: THREAD_ARCHIVE_MINUTES,
+        });
 
   await thread.send(
-    "Got it. Use this thread to refine requirements. Say `plan` when ready or `health` to check Groq."
+    "Got it. Use this thread to refine requirements. Say `plan` when ready or `health` to check Groq.",
   );
 });
 
