@@ -97,8 +97,8 @@ const handleThreadMessage = async (message: Message) => {
   }
 
   const systemPrompt = wantsPlan
-    ? "You are a concise software planning assistant. Produce a clear, numbered plan with 3-8 steps based on the conversation. Avoid code and ask at most one clarification if needed."
-    : "You are a concise software planning assistant. Summarize the request, list constraints, and ask at most one focused clarification question if something critical is missing.";
+    ? "You are a concise software code planning assistant. Ask clarifying questions until a good plan has been drafted to pass onto a coding agent."
+    : "You are a concise software code planning assistant. Summarize the request, list constraints, and ask focused clarification question if something critical is missing.";
 
   try {
     const context = await buildThreadContext(message);
